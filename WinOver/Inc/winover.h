@@ -1,6 +1,6 @@
 #pragma once
-#include <tchar.h>
+#include <windef.h>
 
 namespace winover {
-    __declspec(dllexport) TCHAR* WindowClassName();
+    __declspec(dllimport) HWND CreateOverlay(HWND hWnd);
 }
