@@ -50,7 +50,7 @@ namespace winover {
         return;
     }
 
-    __declspec(dllexport) TCHAR* WindowClassName() {
+    TCHAR* WindowClassName() {
         return OVERLAY;
     }
 }
