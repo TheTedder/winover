@@ -10,12 +10,28 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-        winover::RegisterWindowClass(hModule);
+    {
+        winover::hinst = hModule;
+
+        const WNDCLASS wndclass = {
+            CS_NOCLOSE,
+            winover::Wndproc,
+            0,
+            sizeof(ULONG_PTR),
+            hModule,
+            NULL,
+            NULL,
+            (HBRUSH)GetStockObject(BLACK_BRUSH),
+            NULL,
+            OVERLAY
+        };
+
+        RegisterClass(&wndclass);
         break;
+    }
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
-        winover::UnregisterWindowClass(hModule);
         break;
     }
     return TRUE;

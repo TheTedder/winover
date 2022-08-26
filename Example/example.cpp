@@ -10,29 +10,23 @@ void PrintError();
 int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
     // TODO: Get the window we want to overlay.
 
-    HWND hwnd = CreateWindowEx(
-        WS_EX_LAYERED | WS_EX_TRANSPARENT,
-        winover::WindowClassName(),
-        NULL,
-        WS_POPUP | WS_VISIBLE,
-        64,
-        64,
-        640,
-        480,
-        NULL,
-        NULL,
-        hInst,
-        NULL
-    );
+    HWND notepad;
+    while ((notepad = FindWindowEx(NULL, NULL, NULL, TEXT("Untitled - Notepad"))) == NULL);
+
+    HWND hwnd = winover::CreateOverlay(notepad);
 
     if (hwnd == NULL) {
         PrintError();
         return FALSE;
     }
 
+    ShowWindow(hwnd, SW_SHOW);
+    
     // Subclass.
 
     OldProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
+
+    // Set the transparency.
 
     if (0 == SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 100, LWA_COLORKEY)) {
         PrintError();
@@ -40,7 +34,7 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCm
     
 loop:
     MSG msg;
-    BOOL received = GetMessage(&msg, hwnd, 0, 0);
+    BOOL received = GetMessage(&msg, NULL, 0, 0);
     
     if (received == 0 || received == -1) {
         return msg.wParam;
@@ -57,7 +51,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (uMsg == WM_PAINT) {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
-        SetTextColor(hdc, RGB(255, 255, 255));
+        SetTextColor(hdc, RGB(255, 31, 0));
         SetBkMode(hdc, TRANSPARENT);
         TCHAR text[] = TEXT("Saveglitch is OOB.");
         TextOut(hdc, 0, 0, text, sizeof(text) / sizeof(TCHAR));

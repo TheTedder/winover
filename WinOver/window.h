@@ -2,9 +2,10 @@
 
 #include "framework.h"
 
-namespace winover {
-    void RegisterWindowClass(HINSTANCE);
-    void UnregisterWindowClass(HINSTANCE);
-}
+#define OVERLAY (TEXT("OVERLAY"))
 
-LRESULT __stdcall Wndproc(HWND, UINT, WPARAM, LPARAM);
+namespace winover {
+    extern HINSTANCE hinst;
+    __declspec(dllexport) HWND CreateOverlay(HWND);
+    LRESULT CALLBACK Wndproc(HWND, UINT, WPARAM, LPARAM);
+}
