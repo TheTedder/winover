@@ -9,6 +9,7 @@ void PrintError();
 
 int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
     // TODO: Get the window we want to overlay.
+
     TCHAR* classname = winover::WindowClassName();
     _tprintf_s(TEXT("window class name: %s\n"), classname);
 
