@@ -40,16 +40,18 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCm
     if (0 == SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 100, LWA_COLORKEY)) {
         PrintError();
     }
-
-    ShowWindow(hwnd, SW_SHOW);
     
+loop:
     MSG msg;
-    for (BOOL received = GetMessage(&msg, hwnd, 0, 0); received != 0 && received != -1; received = GetMessage(&msg, hwnd, 0, 0)) {
-        DispatchMessage(&msg);
+    BOOL received = GetMessage(&msg, hwnd, 0, 0);
+    
+    if (received == 0 || received == -1) {
+        return msg.wParam;
     }
 
-    return msg.wParam;
-
+    DispatchMessage(&msg);
+    goto loop;
+    
     UNREFERENCED_PARAMETER(lpCmdLine);
     UNREFERENCED_PARAMETER(nCmdShow);
 }

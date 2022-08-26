@@ -63,5 +63,6 @@ LRESULT __stdcall Wndproc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     default:
         return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
+
     return 0;
 }
