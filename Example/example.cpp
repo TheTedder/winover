@@ -10,12 +10,9 @@ void PrintError();
 int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
     // TODO: Get the window we want to overlay.
 
-    TCHAR* classname = winover::WindowClassName();
-    _tprintf_s(TEXT("window class name: %s\n"), classname);
-
     HWND hwnd = CreateWindowEx(
         WS_EX_LAYERED | WS_EX_TRANSPARENT,
-        classname,
+        winover::WindowClassName(),
         NULL,
         WS_POPUP | WS_VISIBLE,
         64,
@@ -56,7 +53,7 @@ loop:
     UNREFERENCED_PARAMETER(nCmdShow);
 }
 
-LRESULT __stdcall WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (uMsg == WM_PAINT) {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
