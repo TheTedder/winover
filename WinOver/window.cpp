@@ -17,7 +17,8 @@ namespace winover {
             NULL,
             NULL,
             hinst,
-            hwnd);
+            hwnd
+        );
     }
 
     LRESULT CALLBACK Wndproc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -32,4 +33,3 @@ namespace winover {
         return 0;
     }
 }
-
