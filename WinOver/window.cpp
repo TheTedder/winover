@@ -2,11 +2,7 @@
 
 namespace winover {
     HINSTANCE hinst;
-    /// <summary>
-    /// Creates a new overlay. Do not forget to call DestroyWindow() when you are finished with it.
-    /// </summary>
-    /// <param name="hwnd"> A handle to the window you want the overlay to go on top of.</param>
-    /// <returns></returns>
+    
     HWND CreateOverlay(HWND hwnd) {
         const HWND result = CreateWindowEx(
             WS_EX_LAYERED | WS_EX_TRANSPARENT,
