@@ -25,6 +25,9 @@ namespace winover {
 
     LRESULT CALLBACK Wndproc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         switch (uMsg) {
+        case WM_CREATE:
+            SetWindowLongPtr(hWnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+            return 0;
         case WM_DESTROY:
             PostQuitMessage(0);
             break;
