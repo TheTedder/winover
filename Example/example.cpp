@@ -1,5 +1,5 @@
-#include <tchar.h>
 #include <Windows.h>
+#include <tchar.h>
 #include "winover.h"
 
 WNDPROC OldProc;
@@ -20,17 +20,10 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCm
         return FALSE;
     }
 
-    ShowWindow(hwnd, SW_SHOW);
-    
     // Subclass.
 
     OldProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
-
-    // Set the transparency.
-
-    if (0 == SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 100, LWA_COLORKEY)) {
-        PrintError();
-    }
+    ShowWindow(hwnd, SW_SHOW);
     
 loop:
     MSG msg;

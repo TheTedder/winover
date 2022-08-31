@@ -8,7 +8,7 @@ namespace winover {
     /// <param name="hwnd"> A handle to the window you want the overlay to go on top of.</param>
     /// <returns></returns>
     HWND CreateOverlay(HWND hwnd) {
-        return CreateWindowEx(
+        const HWND result = CreateWindowEx(
             WS_EX_LAYERED | WS_EX_TRANSPARENT,
             OVERLAY,
             NULL,
@@ -19,6 +19,12 @@ namespace winover {
             hinst,
             hwnd
         );
+
+        if (result != NULL) {
+            SetLayeredWindowAttributes(result, RGB(0, 0, 0), 100, LWA_COLORKEY);
+        }
+
+        return result;
     }
 
     LRESULT CALLBACK Wndproc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
