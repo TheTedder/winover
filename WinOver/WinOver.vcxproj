@@ -76,15 +76,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PreBuildEvent</CustomBuildBeforeTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -105,6 +109,19 @@
     <PostBuildEvent>
       <Command>copy /y /b "$(SolutionDir)</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>MC -c messages.mc</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>messages.mc</Inputs>
+      <Outputs>messages.h;messagesTEMP.bin;Msg00001.bin;messages.rc</Outputs>
+      <Message>Compiling messages</Message>
+      <TreatOutputAsContent>false</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -129,6 +146,19 @@
     <PostBuildEvent>
       <Command>copy /y /b "$(SolutionDir)</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>MC -c messages.mc</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>messages.mc</Inputs>
+      <Outputs>messages.h;messagesTEMP.bin;Msg00001.bin;messages.rc</Outputs>
+      <Message>Compiling messages</Message>
+      <TreatOutputAsContent>false</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -150,6 +180,19 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>MC -c messages.mc</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>messages.mc</Inputs>
+      <Outputs>messages.h;messagesTEMP.bin;Msg00001.bin;messages.rc</Outputs>
+      <Message>Compiling messages</Message>
+      <TreatOutputAsContent>false</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -174,15 +217,35 @@
     <PostBuildEvent>
       <Command>copy /y /b "$(SolutionDir)</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>MC -c messages.mc</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>messages.mc</Inputs>
+      <Outputs>messages.h;messagesTEMP.bin;Msg00001.bin;messages.rc</Outputs>
+      <Message>Compiling messages</Message>
+      <TreatOutputAsContent>false</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="Inc\winover.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="messages.mc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WinOver.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
