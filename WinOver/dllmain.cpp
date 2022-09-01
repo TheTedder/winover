@@ -11,6 +11,8 @@ BOOL APIENTRY DllMain(
     {
     case DLL_PROCESS_ATTACH:
     {
+        SetUserObjectInformation(GetCurrentProcess(), UOI_TIMERPROC_EXCEPTION_SUPPRESSION, FALSE, 0);
+        
         const WNDCLASS wndclass = {
             CS_NOCLOSE,
             winover::Wndproc,
