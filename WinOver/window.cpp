@@ -2,6 +2,10 @@
 
 namespace winover {
     HWND CreateOverlay(HWND hwnd) {
+        if (0 == IsWindow(hwnd)) {
+            return NULL;
+        }
+
         HMODULE hmodule;
         if (0 == GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, TEXT("WinOver.dll"), &hmodule)) {
             return NULL;
