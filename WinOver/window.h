@@ -3,8 +3,6 @@
 #include "framework.h"
 
 namespace winover {
-    // The module handle. Its value is set when the library is loaded.
-    extern HINSTANCE hinst;
     // Constants 
 
     const TCHAR OVERLAY[] = TEXT("OVERLAY");

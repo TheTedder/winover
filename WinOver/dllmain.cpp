@@ -11,8 +11,6 @@ BOOL APIENTRY DllMain(
     {
     case DLL_PROCESS_ATTACH:
     {
-        winover::hinst = hModule;
-
         const WNDCLASS wndclass = {
             CS_NOCLOSE,
             winover::Wndproc,

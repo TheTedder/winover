@@ -1,9 +1,12 @@
 #include "window.h"
 
 namespace winover {
-    HINSTANCE hinst;
-    
     HWND CreateOverlay(HWND hwnd) {
+        HMODULE hmodule;
+        if (0 == GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, TEXT("WinOver.dll"), &hmodule)) {
+            return NULL;
+        }
+
         const HWND result = CreateWindowEx(
             WS_EX_LAYERED | WS_EX_TRANSPARENT,
             OVERLAY,
@@ -12,7 +15,7 @@ namespace winover {
             0, 0, 200, 200,
             NULL,
             NULL,
-            hinst,
+            hmodule,
             hwnd
         );
 
