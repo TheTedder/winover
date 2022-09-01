@@ -24,11 +24,38 @@ namespace winover {
         );
 
         if (result != NULL) {
-            SetLayeredWindowAttributes(result, RGB(0, 0, 0), 100, LWA_COLORKEY);
+            SetLayeredWindowAttributes(result, RGB(0, 0, 0), NULL, LWA_COLORKEY);
             SetTimer(result, TIMER_IDEVENT, USER_TIMER_MINIMUM, TimerProc);
         }
 
         return result;
+    }
+
+    BOOL SetBackgroundColor(HWND hWnd, COLORREF color)
+    {
+        LONG_PTR exStyle = GetWindowLongPtr(hWnd, GWL_EXSTYLE);
+        if (exStyle == 0) {
+            return exStyle;
+        }
+
+        if (!(exStyle & WS_EX_LAYERED)) {
+            SetLastError(ERR_NONLAYERED_WINDOW);
+            return FALSE;
+        }
+
+        if (0 == SetLayeredWindowAttributes(hWnd, color, NULL, LWA_COLORKEY)) {
+            return FALSE;
+        }
+
+        ULONG_PTR prevBrush = SetClassLongPtr(hWnd, GCLP_HBRBACKGROUND, (LONG_PTR)CreateSolidBrush(color));
+        
+        if (prevBrush != NULL) {
+            DeleteObject((HGDIOBJ)prevBrush);
+        }
+
+        RedrawWindow(hWnd, NULL, NULL, RDW_NOFRAME | RDW_ERASE | RDW_INVALIDATE | RDW_ERASENOW);
+
+        return TRUE;
     }
 
     LRESULT CALLBACK Wndproc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -61,8 +88,7 @@ namespace winover {
 
         if (placement.showCmd == SW_SHOWMINIMIZED || !IsWindowVisible(overlaid)) {
             ShowWindow(hWnd, SW_HIDE);
-        }
-        else {
+        } else {
             WINDOWINFO info = {
                 sizeof(WINDOWINFO)
             };

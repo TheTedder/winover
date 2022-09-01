@@ -1,6 +1,7 @@
 #pragma once
 
 #include "framework.h"
+#include "messages.h"
 
 namespace winover {
     // Constants 
@@ -11,7 +12,8 @@ namespace winover {
     // Exported functions
 
     __declspec(dllexport) HWND CreateOverlay(HWND);
-    
+    __declspec(dllexport) BOOL SetBackgroundColor(HWND hWnd, COLORREF color);
+
     // Internal functions
 
     LRESULT CALLBACK Wndproc(HWND, UINT, WPARAM, LPARAM);
