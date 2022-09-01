@@ -37,6 +37,7 @@ namespace winover {
             SetWindowLongPtr(hWnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
             return 0;
         case WM_DESTROY:
+            KillTimer(hWnd, TIMER_IDEVENT);
             PostQuitMessage(0);
             break;
         default:
