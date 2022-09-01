@@ -8,8 +8,6 @@ LRESULT __stdcall WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void PrintError();
 
 int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
-    // TODO: Get the window we want to overlay.
-
     HWND notepad;
     while ((notepad = FindWindowEx(NULL, NULL, NULL, TEXT("Untitled - Notepad"))) == NULL);
 
@@ -25,6 +23,7 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCm
     OldProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
     ShowWindow(hwnd, SW_SHOW);
     
+    // The message loop
 loop:
     MSG msg;
     BOOL received = GetMessage(&msg, NULL, 0, 0);

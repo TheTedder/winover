@@ -71,12 +71,6 @@ namespace winover {
                 return;
             }
 
-            /*POINT point = { 0L, 0L };
-            if (0 == ClientToScreen(overlaid, &point)) {
-                DestroyWindow(hWnd);
-                return;
-            }*/
-
             HWND after;
             if (WS_EX_TOPMOST & GetWindowLongPtr(overlaid, GWL_EXSTYLE) || info.dwWindowStatus == WS_ACTIVECAPTION) {
                 after = HWND_TOPMOST;
