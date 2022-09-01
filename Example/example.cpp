@@ -46,7 +46,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         HDC hdc = BeginPaint(hWnd, &ps);
         SetTextColor(hdc, RGB(255, 31, 0));
         SetBkMode(hdc, TRANSPARENT);
-        TCHAR text[] = TEXT("Saveglitch is OOB.");
+        TCHAR text[] = TEXT("Check out this sick overlay.");
         TextOut(hdc, 0, 0, text, sizeof(text) / sizeof(TCHAR));
         EndPaint(hWnd, &ps);
     }
