@@ -11,8 +11,8 @@ BOOL APIENTRY DllMain(
     {
     case DLL_PROCESS_ATTACH:
     {
-        winover::hinst = hModule;
-
+        SetUserObjectInformation(GetCurrentProcess(), UOI_TIMERPROC_EXCEPTION_SUPPRESSION, FALSE, 0);
+        
         const WNDCLASS wndclass = {
             CS_NOCLOSE,
             winover::Wndproc,
@@ -23,7 +23,7 @@ BOOL APIENTRY DllMain(
             NULL,
             (HBRUSH)GetStockObject(BLACK_BRUSH),
             NULL,
-            OVERLAY
+            winover::OVERLAY
         };
 
         RegisterClass(&wndclass);
@@ -34,5 +34,7 @@ BOOL APIENTRY DllMain(
     case DLL_PROCESS_DETACH:
         break;
     }
+
+    UNREFERENCED_PARAMETER(lpReserved);
     return TRUE;
 }

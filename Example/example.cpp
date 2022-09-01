@@ -1,5 +1,5 @@
-#include <tchar.h>
 #include <Windows.h>
+#include <tchar.h>
 #include "winover.h"
 
 WNDPROC OldProc;
@@ -8,8 +8,6 @@ LRESULT __stdcall WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void PrintError();
 
 int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
-    // TODO: Get the window we want to overlay.
-
     HWND notepad;
     while ((notepad = FindWindowEx(NULL, NULL, NULL, TEXT("Untitled - Notepad"))) == NULL);
 
@@ -20,18 +18,12 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCm
         return FALSE;
     }
 
-    ShowWindow(hwnd, SW_SHOW);
-    
     // Subclass.
 
     OldProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
-
-    // Set the transparency.
-
-    if (0 == SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 100, LWA_COLORKEY)) {
-        PrintError();
-    }
+    ShowWindow(hwnd, SW_SHOW);
     
+    // The message loop
 loop:
     MSG msg;
     BOOL received = GetMessage(&msg, NULL, 0, 0);
@@ -53,7 +45,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         HDC hdc = BeginPaint(hWnd, &ps);
         SetTextColor(hdc, RGB(255, 31, 0));
         SetBkMode(hdc, TRANSPARENT);
-        TCHAR text[] = TEXT("Saveglitch is OOB.");
+        TCHAR text[] = TEXT("Check out this sick overlay.");
         TextOut(hdc, 0, 0, text, sizeof(text) / sizeof(TCHAR));
         EndPaint(hWnd, &ps);
     }
