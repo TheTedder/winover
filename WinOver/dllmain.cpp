@@ -23,7 +23,7 @@ BOOL APIENTRY DllMain(
             NULL,
             (HBRUSH)GetStockObject(BLACK_BRUSH),
             NULL,
-            OVERLAY
+            winover::OVERLAY
         };
 
         RegisterClass(&wndclass);
