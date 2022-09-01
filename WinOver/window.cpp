@@ -81,12 +81,12 @@ namespace winover {
             if (WS_EX_TOPMOST & GetWindowLongPtr(overlaid, GWL_EXSTYLE) || info.dwWindowStatus == WS_ACTIVECAPTION) {
                 after = HWND_TOPMOST;
             }
-            else {
-                /* 
-                 * Place our overlay directly below the window directly above the overlaid window.
-                 * This prevents the overlay from drawing over any windows it's not supposed to.
-                 */
-                after = GetWindow(overlaid, GW_HWNDPREV);
+            /*
+             * Place our overlay directly below the window directly above the overlaid window.
+             * This prevents the overlay from drawing over any windows it's not supposed to.
+             */
+            else if ((after = GetWindow(overlaid, GW_HWNDPREV)) == NULL) {
+                after = HWND_NOTOPMOST;
             }
 
             // Position the overlay.
