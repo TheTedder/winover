@@ -383,3 +383,7 @@ MigrationBackup/
 *.exe
 *.out
 *.app
+WinOver/messages.rc
+WinOver/Messages_ENU.bin
+WinOver/MSG00001.bin
+WinOver/messages.h
