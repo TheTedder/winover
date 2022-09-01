@@ -8,11 +8,11 @@ namespace winover {
     const TCHAR OVERLAY[] = TEXT("OVERLAY");
     const UINT_PTR TIMER_IDEVENT = 1;
 
-    // Exported functions:
+    // Exported functions
 
     __declspec(dllexport) HWND CreateOverlay(HWND);
     
-    // Internal functions:
+    // Internal functions
 
     LRESULT CALLBACK Wndproc(HWND, UINT, WPARAM, LPARAM);
     VOID CALLBACK TimerProc(HWND, UINT, UINT_PTR, DWORD);

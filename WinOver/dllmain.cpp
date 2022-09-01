@@ -34,5 +34,7 @@ BOOL APIENTRY DllMain(
     case DLL_PROCESS_DETACH:
         break;
     }
+
+    UNREFERENCED_PARAMETER(lpReserved);
     return TRUE;
 }
