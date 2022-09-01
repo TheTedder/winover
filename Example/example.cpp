@@ -21,7 +21,6 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCm
     // Subclass.
 
     OldProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
-    ShowWindow(hwnd, SW_SHOW);
     
     // The message loop
 loop:
