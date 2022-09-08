@@ -34,6 +34,8 @@ loop:
     DispatchMessage(&msg);
     goto loop;
     
+    UNREFERENCED_PARAMETER(hInst);
+    UNREFERENCED_PARAMETER(hPrev);
     UNREFERENCED_PARAMETER(lpCmdLine);
     UNREFERENCED_PARAMETER(nCmdShow);
 }
