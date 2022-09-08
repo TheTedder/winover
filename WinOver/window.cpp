@@ -12,7 +12,7 @@ namespace winover {
         }
 
         const HWND result = CreateWindowEx(
-            WS_EX_LAYERED | WS_EX_TRANSPARENT,
+            WS_EX_NOACTIVATE | WS_EX_LAYERED | WS_EX_TRANSPARENT,
             OVERLAY,
             NULL,
             WS_POPUP,
