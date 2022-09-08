@@ -7,7 +7,7 @@ WNDPROC OldProc;
 LRESULT __stdcall WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void PrintError();
 
-int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
+int APIENTRY _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
     HWND notepad;
     while ((notepad = FindWindowEx(NULL, NULL, NULL, TEXT("Untitled - Notepad"))) == NULL);
 
