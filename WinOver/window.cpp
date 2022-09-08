@@ -35,7 +35,7 @@ namespace winover {
         switch (uMsg) {
         case WM_CREATE:
             SetWindowLongPtr(hWnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
-            return 0;
+            break;
         case WM_DESTROY:
             KillTimer(hWnd, TIMER_IDEVENT);
             PostQuitMessage(0);
