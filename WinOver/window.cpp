@@ -15,7 +15,7 @@ namespace winover {
             WS_EX_NOACTIVATE | WS_EX_LAYERED | WS_EX_TRANSPARENT,
             OVERLAY,
             NULL,
-            WS_POPUP,
+            WS_POPUP | WS_DISABLED,
             0, 0, 200, 200,
             NULL,
             NULL,
