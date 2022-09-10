@@ -71,16 +71,22 @@ namespace winover {
                 return;
             }
 
+            UINT flags;
             HWND after;
-            if (WS_EX_TOPMOST & GetWindowLongPtr(overlaid, GWL_EXSTYLE) || info.dwWindowStatus == WS_ACTIVECAPTION) {
-                after = HWND_TOPMOST;
-            }
-            /*
-             * Place our overlay directly below the window directly above the overlaid window.
-             * This prevents the overlay from drawing over any windows it's not supposed to.
-             */
-            else if ((after = GetWindow(overlaid, GW_HWNDPREV)) == NULL) {
-                after = HWND_NOTOPMOST;
+
+            if (GetWindow(hWnd, GW_HWNDNEXT) == overlaid) {
+                // If the overlay is already direct above the target window in the Z order then we don't need to change it.
+                flags = SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER;
+            } else {
+                /*
+                 * Place our overlay directly below the window directly above the overlaid window.
+                 * This prevents the overlay from drawing over any windows it's not supposed to.
+                 * Conveniently, if there is no window of top of the one we want, GetWindow returns zero,
+                 * which corresponds to the value of HWND_TOP when passed into SetWindowPos,
+                 * producing the desired result of placing our overlay on top of every window.
+                 */
+                after = GetWindow(overlaid, GW_HWNDPREV);
+                flags = SWP_SHOWWINDOW | SWP_NOACTIVATE;
             }
 
             // Position the overlay.
@@ -91,7 +97,7 @@ namespace winover {
                 info.rcClient.top,
                 info.rcClient.right - info.rcClient.left,
                 info.rcClient.bottom - info.rcClient.top,
-                SWP_SHOWWINDOW
+                flags
             );
         }
     }
