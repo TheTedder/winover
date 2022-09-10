@@ -1,12 +1,14 @@
 #pragma once
 
 #include <sdkddkver.h>
-#define NTDDI_VERSION NTDDI_WIN8   
-#define _WIN32_WINNT _WIN32_WINNT_WIN8   
-#define WINVER _WIN32_WINNT_WIN8   
+#define NTDDI_VERSION NTDDI_WINXPSP3
+#define _WIN32_WINNT _WIN32_WINNT_WS03
+#define WINVER _WIN32_WINNT_WS03
+
 #define NOGDICAPMASKS
 #define NOVIRTUALKEYCODES
 #define NOSYSMETRICS
+#define NOMENUS
 #define NOICONS
 #define NOKEYSTATES
 #define NOSYSCOMMANDS
@@ -18,7 +20,8 @@
 #define NOWH
 #define NOKANJI
 #define NOMCX
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-// Windows Header Files
+
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
 #include <tchar.h>

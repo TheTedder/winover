@@ -7,7 +7,7 @@ WNDPROC OldProc;
 LRESULT __stdcall WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void PrintError();
 
-int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
+int APIENTRY _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCmdShow) {
     HWND notepad;
     while ((notepad = FindWindowEx(NULL, NULL, NULL, TEXT("Untitled - Notepad"))) == NULL);
 
@@ -21,7 +21,6 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nCm
     // Subclass.
 
     OldProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
-    ShowWindow(hwnd, SW_SHOW);
     
     // The message loop
 loop:
@@ -35,6 +34,8 @@ loop:
     DispatchMessage(&msg);
     goto loop;
     
+    UNREFERENCED_PARAMETER(hInst);
+    UNREFERENCED_PARAMETER(hPrev);
     UNREFERENCED_PARAMETER(lpCmdLine);
     UNREFERENCED_PARAMETER(nCmdShow);
 }

@@ -1,5 +1,7 @@
 #include "window.h"
 
+#pragma warning( disable : 4703)
+
 namespace winover {
     HWND CreateOverlay(HWND hwnd) {
         if (0 == IsWindow(hwnd)) {
@@ -12,10 +14,10 @@ namespace winover {
         }
 
         const HWND result = CreateWindowEx(
-            WS_EX_LAYERED | WS_EX_TRANSPARENT,
+            WS_EX_NOACTIVATE | WS_EX_LAYERED | WS_EX_TRANSPARENT,
             OVERLAY,
             NULL,
-            WS_POPUP,
+            WS_POPUP | WS_DISABLED,
             0, 0, 200, 200,
             NULL,
             NULL,
@@ -35,7 +37,7 @@ namespace winover {
         switch (uMsg) {
         case WM_CREATE:
             SetWindowLongPtr(hWnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
-            return 0;
+            break;
         case WM_DESTROY:
             KillTimer(hWnd, TIMER_IDEVENT);
             PostQuitMessage(0);
@@ -71,27 +73,34 @@ namespace winover {
                 return;
             }
 
+            UINT flags;
             HWND after;
-            if (WS_EX_TOPMOST & GetWindowLongPtr(overlaid, GWL_EXSTYLE) || info.dwWindowStatus == WS_ACTIVECAPTION) {
-                after = HWND_TOPMOST;
-            }
-            /*
-             * Place our overlay directly below the window directly above the overlaid window.
-             * This prevents the overlay from drawing over any windows it's not supposed to.
-             */
-            else if ((after = GetWindow(overlaid, GW_HWNDPREV)) == NULL) {
-                after = HWND_NOTOPMOST;
+
+            if (GetWindow(hWnd, GW_HWNDNEXT) == overlaid) {
+                // If the overlay is already direct above the target window in the Z order then we don't need to change it.
+                flags = SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER;
+            } else {
+                /*
+                 * Place our overlay directly below the window directly above the overlaid window.
+                 * This prevents the overlay from drawing over any windows it's not supposed to.
+                 * Conveniently, if there is no window of top of the one we want, GetWindow returns zero,
+                 * which corresponds to the value of HWND_TOP when passed into SetWindowPos,
+                 * producing the desired result of placing our overlay on top of every window.
+                 */
+                after = GetWindow(overlaid, GW_HWNDPREV);
+                flags = SWP_SHOWWINDOW | SWP_NOACTIVATE;
             }
 
             // Position the overlay.
             SetWindowPos(
                 hWnd,
+#pragma warning( suppress : 6001)
                 after,
                 info.rcClient.left,
                 info.rcClient.top,
                 info.rcClient.right - info.rcClient.left,
                 info.rcClient.bottom - info.rcClient.top,
-                SWP_SHOWWINDOW
+                flags
             );
         }
     }
