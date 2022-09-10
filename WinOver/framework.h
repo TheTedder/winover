@@ -8,6 +8,7 @@
 #define NOGDICAPMASKS
 #define NOVIRTUALKEYCODES
 #define NOSYSMETRICS
+#define NOMENUS
 #define NOICONS
 #define NOKEYSTATES
 #define NOSYSCOMMANDS
@@ -19,7 +20,8 @@
 #define NOWH
 #define NOKANJI
 #define NOMCX
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-// Windows Header Files
+
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
 #include <tchar.h>
