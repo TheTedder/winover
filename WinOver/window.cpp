@@ -1,5 +1,7 @@
 #include "window.h"
 
+#pragma warning( disable : 4703)
+
 namespace winover {
     HWND CreateOverlay(HWND hwnd) {
         if (0 == IsWindow(hwnd)) {
@@ -92,6 +94,7 @@ namespace winover {
             // Position the overlay.
             SetWindowPos(
                 hWnd,
+#pragma warning( suppress : 6001)
                 after,
                 info.rcClient.left,
                 info.rcClient.top,
