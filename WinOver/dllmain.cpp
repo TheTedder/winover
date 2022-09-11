@@ -21,7 +21,7 @@ BOOL APIENTRY DllMain(
             hModule,
             NULL,
             NULL,
-            (HBRUSH)GetStockObject(BLACK_BRUSH),
+            NULL,
             NULL,
             winover::OVERLAY
         };
