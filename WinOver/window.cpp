@@ -49,12 +49,11 @@ namespace winover {
     }
 
     VOID CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT_PTR id, DWORD time) {
-        HWND overlaid = (HWND)GetWindowLongPtr(hWnd, 0);
+        const HWND overlaid = (HWND)GetWindowLongPtr(hWnd, 0);
 
-        WINDOWPLACEMENT placement{
+        WINDOWPLACEMENT placement = {
             sizeof(WINDOWPLACEMENT)
         };
-
         if (0 == GetWindowPlacement(overlaid, &placement)) {
             DestroyWindow(hWnd);
             return;
@@ -62,45 +61,44 @@ namespace winover {
 
         if (placement.showCmd == SW_SHOWMINIMIZED || !IsWindowVisible(overlaid)) {
             ShowWindow(hWnd, SW_HIDE);
+            return;
         }
-        else {
-            WINDOWINFO info = {
-                sizeof(WINDOWINFO)
-            };
-            if (0 == GetWindowInfo(overlaid, &info)) {
-                DestroyWindow(hWnd);
-                return;
-            }
 
-            UINT flags;
-            HWND after;
+        WINDOWINFO info = {
+            sizeof(WINDOWINFO)
+        };
+        if (0 == GetWindowInfo(overlaid, &info)) {
+            DestroyWindow(hWnd);
+            return;
+        }
 
-            if (GetWindow(hWnd, GW_HWNDNEXT) == overlaid) {
-                // If the overlay is already direct above the target window in the Z order then we don't need to change it.
-                flags = SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER;
-            } else {
-                /*
-                 * Place our overlay directly below the window directly above the overlaid window.
-                 * This prevents the overlay from drawing over any windows it's not supposed to.
-                 * Conveniently, if there is no window of top of the one we want, GetWindow returns zero,
-                 * which corresponds to the value of HWND_TOP when passed into SetWindowPos,
-                 * producing the desired result of placing our overlay on top of every window.
-                 */
-                after = GetWindow(overlaid, GW_HWNDPREV);
-                flags = SWP_SHOWWINDOW | SWP_NOACTIVATE;
-            }
+        UINT flags;
+        HWND after;
+        if (GetWindow(hWnd, GW_HWNDNEXT) == overlaid) {
+            // If the overlay is already direct above the target window in the Z order then we don't need to change it.
+            flags = SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER;
+        } else {
+            /*
+                * Place our overlay directly below the window directly above the overlaid window.
+                * This prevents the overlay from drawing over any windows it's not supposed to.
+                * Conveniently, if there is no window of top of the one we want, GetWindow returns zero,
+                * which corresponds to the value of HWND_TOP when passed into SetWindowPos,
+                * producing the desired result of placing our overlay on top of every window.
+                */
+            after = GetWindow(overlaid, GW_HWNDPREV);
+            flags = SWP_SHOWWINDOW | SWP_NOACTIVATE;
+        }
 
-            // Position the overlay.
-            SetWindowPos(
-                hWnd,
+        // Position the overlay.
+        SetWindowPos(
+            hWnd,
 #pragma warning( suppress : 6001)
-                after,
-                info.rcClient.left,
-                info.rcClient.top,
-                info.rcClient.right - info.rcClient.left,
-                info.rcClient.bottom - info.rcClient.top,
-                flags
-            );
-        }
+            after,
+            info.rcClient.left,
+            info.rcClient.top,
+            info.rcClient.right - info.rcClient.left,
+            info.rcClient.bottom - info.rcClient.top,
+            flags
+        );
     }
 }
