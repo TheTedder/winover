@@ -26,7 +26,6 @@ namespace winover {
         );
 
         if (result != NULL) {
-            SetLayeredWindowAttributes(result, RGB(0, 0, 0), 100, LWA_COLORKEY);
             SetTimer(result, TIMER_IDEVENT, USER_TIMER_MINIMUM, TimerProc);
         }
 
