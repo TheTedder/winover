@@ -73,7 +73,13 @@ namespace winover {
         }
 
         UINT flags;
+
+#ifdef _DEBUG
+        HWND after = NULL;
+#else
         HWND after;
+#endif
+
         if (GetWindow(hWnd, GW_HWNDNEXT) == overlaid) {
             // If the overlay is already direct above the target window in the Z order then we don't need to change it.
             flags = SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER;
