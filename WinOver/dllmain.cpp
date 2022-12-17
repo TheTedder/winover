@@ -2,6 +2,10 @@
 #include "framework.h"
 #include "window.h"
 
+namespace winover {
+    ATOM overlay_class;
+}
+
 BOOL APIENTRY DllMain(
     HMODULE hModule,
     DWORD  ul_reason_for_call,
@@ -26,7 +30,11 @@ BOOL APIENTRY DllMain(
             winover::OVERLAY
         };
 
-        RegisterClass(&wndclass);
+        ATOM registered_class = RegisterClass(&wndclass);
+
+        if (registered_class != 0) {
+            winover::overlay_class = registered_class;
+        }
         break;
     }
     case DLL_THREAD_ATTACH:
