@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning( disable: 4005 )
 
 #include <sdkddkver.h>
 #define NTDDI_VERSION NTDDI_WINXPSP3
