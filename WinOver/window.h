@@ -11,6 +11,7 @@ namespace winover {
     // Exported functions
 
     __declspec(dllexport) HWND CreateOverlay(HWND);
+    __declspec(dllexport) BOOL ChangeTarget(HWND, HWND);
     
     // Internal functions
 

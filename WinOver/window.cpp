@@ -3,6 +3,8 @@
 #pragma warning( disable : 4703)
 
 namespace winover {
+    extern ATOM overlay_class;
+
     HWND CreateOverlay(HWND hwnd) {
         if (0 == IsWindow(hwnd)) {
             return NULL;
@@ -30,6 +32,21 @@ namespace winover {
         }
 
         return result;
+    }
+
+    BOOL ChangeTarget(HWND overlay, HWND target) {
+        if (overlay == target) {
+            return FALSE;
+        }
+
+        ULONG_PTR class_longptr = GetClassLongPtr(overlay, GCW_ATOM);
+
+        if (class_longptr == 0 || class_longptr != overlay_class) {
+            return FALSE;
+        }
+
+        // 0 doesn't necessarily indicate an error for this function because it returns the previous value, which could be 0; however, the previous value should never be zero here.
+        return SetWindowLongPtr(overlay, 0, (LONG_PTR)target) != 0;
     }
 
     LRESULT CALLBACK Wndproc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
