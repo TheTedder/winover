@@ -22,7 +22,10 @@ int APIENTRY _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int n
     SetClassLongPtrW(hwnd, GCLP_HBRBACKGROUND, (LONG_PTR)GetStockObject(BLACK_BRUSH));
 
     // Set the color key to black.
-    SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 100, LWA_COLORKEY); 
+    if (0 == SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 100, LWA_COLORKEY)) {
+        PrintError();
+        return FALSE;
+    }
 
     // Subclass.
 
