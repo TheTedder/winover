@@ -17,4 +17,5 @@ namespace winover {
 
     LRESULT CALLBACK Wndproc(HWND, UINT, WPARAM, LPARAM);
     VOID CALLBACK TimerProc(HWND, UINT, UINT_PTR, DWORD);
+    BOOL IsOverlay(HWND);
 }
