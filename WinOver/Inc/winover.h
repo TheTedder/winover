@@ -25,4 +25,17 @@ namespace winover {
     /// </param>
     /// <returns>TRUE for success and FALSE for failure. This function may or may not call SetLastError.</returns>
     __declspec(dllimport) BOOL ChangeTarget(HWND overlay, HWND target);
+
+    /// <summary>
+    /// Retrieves a handle to the target window that an overlay is drawing on top of.
+    /// </summary>
+    /// <param name="overlay">
+    /// A handle to the overlay whose target you want to retrieve.
+    /// This must be a handle to a window that was created with the CreateOverlay function.
+    /// </param>
+    /// <returns>
+    /// A handle to the target window or NULL if it could not be retrieved.
+    /// This function may or may not call SetLastError.
+    /// </returns>
+    __declspec(dllimport) HWND GetTarget(HWND overlay);
 }

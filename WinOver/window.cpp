@@ -54,6 +54,10 @@ namespace winover {
         return SetWindowLongPtr(overlay, 0, (LONG_PTR)target) != 0;
     }
 
+    HWND GetTarget(HWND overlay) {
+        return IsOverlay(overlay) ? (HWND)GetWindowLongPtr(overlay, 0) : NULL;
+    }
+
     LRESULT CALLBACK Wndproc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         switch (uMsg) {
         case WM_CREATE:
