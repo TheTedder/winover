@@ -4,7 +4,6 @@
 namespace winover {
     /// <summary>
     /// Creates a new overlay. The thread that calls this function must be responsible for handling window messages.
-    /// The window will have a completely black background by default.
     /// The user can call DestroyWindow() to terminate the overlay prematurely, otherwise it will close itself when the overlaid window closes.
     /// </summary>
     /// <param name="hwnd">A handle to the window you want the overlay to go on top of.</param>
