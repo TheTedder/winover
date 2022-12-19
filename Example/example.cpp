@@ -1,10 +1,10 @@
 #include <Windows.h>
 #include "winover.h"
 
-WNDPROC OldProc;
 
 LRESULT __stdcall WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-void PrintError();
+VOID PrintError();
+WNDPROC OldProc;
 int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPWSTR lpCmdLine, int nCmdShow) {
 
     HWND notepad;
@@ -62,10 +62,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     return CallWindowProcW(OldProc, hWnd, uMsg, wParam, lParam);
 }
 
-void PrintError() {
-    DWORD error = GetLastError();
+VOID PrintError() {
     const DWORD error = GetLastError();
     WCHAR error_text[256];
     if (FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, NULL, error, 0, error_text, sizeof(error_text) / sizeof(WCHAR), NULL) > 0) {
+        OutputDebugStringW(error_text);
     }
 }
