@@ -51,7 +51,7 @@ loop:
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (uMsg == WM_PAINT) {
         PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
+        const HDC hdc = BeginPaint(hWnd, &ps);
         SetTextColor(hdc, RGB(255, 31, 0));
         SetBkMode(hdc, TRANSPARENT);
         const WCHAR text[] = TEXT("Check out this sick overlay.");
