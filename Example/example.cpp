@@ -1,20 +1,44 @@
 #include <Windows.h>
+#include <Psapi.h>
+#include <Shlwapi.h>
 #include "winover.h"
 
+typedef struct {
+    LPCWSTR desired;
+    HWND target;
+} ENUMWNDPROCDATA;
 
 LRESULT __stdcall WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam);
 VOID PrintError();
+
 WNDPROC OldProc;
+
 int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPWSTR lpCmdLine, int nCmdShow) {
+    int argc;
+    LPWSTR* const argv = CommandLineToArgvW(lpCmdLine, &argc);
 
-    HWND notepad;
-    while ((notepad = FindWindowEx(NULL, NULL, NULL, TEXT("Untitled - Notepad"))) == NULL);
+    if (argc < 1) {
+        LocalFree(argv);
+        return 0;
+    }
 
-    HWND hwnd = winover::CreateOverlay(notepad);
+    ENUMWNDPROCDATA data {
+        argv[0],
+        NULL
+    };
+
+    // Find the top level window for the program specified on the command line.
+    while (data.target == NULL) {
+        EnumWindows(EnumWndProc, (LPARAM)&data);
+    }
+
+    LocalFree(argv);
+    const HWND hwnd = winover::CreateOverlay(data.target);
 
     if (hwnd == NULL) {
         PrintError();
-        return FALSE;
+        return 0;
     }
 
     // Set the background to solid black.
@@ -44,7 +68,6 @@ loop:
     
     UNREFERENCED_PARAMETER(hInst);
     UNREFERENCED_PARAMETER(hPrev);
-    UNREFERENCED_PARAMETER(lpCmdLine);
     UNREFERENCED_PARAMETER(nCmdShow);
 }
 
@@ -60,6 +83,40 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     }
 
     return CallWindowProcW(OldProc, hWnd, uMsg, wParam, lParam);
+}
+
+BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam) {
+    const LONG_PTR style = GetWindowLongPtrW(hwnd, GWL_STYLE);
+
+    if (style == 0 || (style & WS_CHILD) != 0 || GetWindow(hwnd, GW_OWNER) != NULL || !IsWindowVisible(hwnd)) {
+        return TRUE;
+    }
+
+    DWORD pid;
+    GetWindowThreadProcessId(hwnd, &pid);
+    const HANDLE hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+
+    if (hProc == NULL) {
+        return TRUE;
+    }
+
+    WCHAR procname[MAX_PATH];
+    const DWORD result = GetModuleFileNameExW(hProc, NULL, procname, MAX_PATH);
+    CloseHandle(hProc);
+
+    if (result == 0) {
+        return TRUE;
+    }
+
+    ENUMWNDPROCDATA* const data = (ENUMWNDPROCDATA*)lParam;
+    LPCWSTR const file = PathFindFileNameW(procname);
+    
+    if (wcscmp(data->desired, file) != 0) {
+        return TRUE;
+    }
+
+    data->target = hwnd;
+    return FALSE;
 }
 
 VOID PrintError() {
