@@ -4,7 +4,7 @@
 namespace winover {
     /// <summary>
     /// Creates a new overlay. The thread that calls this function must be responsible for handling window messages.
-    /// The user can call DestroyWindow() to terminate the overlay prematurely, otherwise it will close itself when the overlaid window closes.
+    /// The user can call DestroyWindow() to terminate the overlay manually, otherwise it will close itself when the overlaid window closes.
     /// </summary>
     /// <param name="hwnd">A handle to the window you want the overlay to go on top of.</param>
     /// <returns>A handle to the overlay or NULL if the overlay was not created successfully.</returns>
