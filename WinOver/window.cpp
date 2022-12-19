@@ -38,7 +38,6 @@ namespace winover {
         ULONG_PTR class_longptr = GetClassLongPtr(hwnd, GCW_ATOM);
 
         return class_longptr != 0 && class_longptr == overlay_class;
-
     }
 
     BOOL ChangeTarget(HWND overlay, HWND target) {
