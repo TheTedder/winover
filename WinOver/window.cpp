@@ -35,7 +35,7 @@ namespace winover {
     }
 
     BOOL IsOverlay(HWND hwnd) {
-        ULONG_PTR class_longptr = GetClassLongPtr(hwnd, GCW_ATOM);
+        const ULONG_PTR class_longptr = GetClassLongPtr(hwnd, GCW_ATOM);
         return class_longptr != 0 && class_longptr == overlay_class;
     }
 
