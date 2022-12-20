@@ -15,7 +15,7 @@ namespace winover {
             return NULL;
         }
 
-        const HWND result = CreateWindowEx(
+        return CreateWindowEx(
             WS_EX_NOACTIVATE | WS_EX_LAYERED | WS_EX_TRANSPARENT,
             OVERLAY,
             NULL,
@@ -26,12 +26,6 @@ namespace winover {
             hmodule,
             hwnd
         );
-
-        if (result != NULL) {
-            SetTimer(result, TIMER_IDEVENT, USER_TIMER_MINIMUM, TimerProc);
-        }
-
-        return result;
     }
 
     BOOL IsOverlay(HWND hwnd) {
@@ -60,6 +54,7 @@ namespace winover {
         switch (uMsg) {
         case WM_CREATE:
             SetWindowLongPtr(hWnd, 0, (LONG_PTR)((LPCREATESTRUCT)lParam)->lpCreateParams);
+            SetTimer(hWnd, TIMER_IDEVENT, USER_TIMER_MINIMUM, TimerProc);
             break;
         case WM_DESTROY:
             KillTimer(hWnd, TIMER_IDEVENT);
