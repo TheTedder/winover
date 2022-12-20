@@ -148,8 +148,6 @@
   <ItemGroup>
     <ProjectReference Include="..\WinOver\WinOver.vcxproj">
       <Project>{21b28d18-8b52-413f-9ea5-c3bcdc6f321c}</Project>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
