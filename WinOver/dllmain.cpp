@@ -30,7 +30,7 @@ BOOL APIENTRY DllMain(
             winover::OVERLAY
         };
 
-        ATOM registered_class = RegisterClass(&wndclass);
+        const ATOM registered_class = RegisterClass(&wndclass);
 
         if (registered_class != 0) {
             winover::overlay_class = registered_class;

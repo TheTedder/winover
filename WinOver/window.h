@@ -12,9 +12,11 @@ namespace winover {
 
     __declspec(dllexport) HWND CreateOverlay(HWND);
     __declspec(dllexport) BOOL ChangeTarget(HWND, HWND);
+    __declspec(dllexport) HWND GetTarget(HWND);
     
     // Internal functions
 
     LRESULT CALLBACK Wndproc(HWND, UINT, WPARAM, LPARAM);
     VOID CALLBACK TimerProc(HWND, UINT, UINT_PTR, DWORD);
+    BOOL IsOverlay(HWND);
 }

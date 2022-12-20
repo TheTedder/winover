@@ -52,7 +52,7 @@ int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPWSTR lpCmdLine, int nC
     // Set the color key to black.
     if (0 == SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 100, LWA_COLORKEY)) {
         PrintError();
-        return FALSE;
+        return 0;
     }
 
     // Subclass.

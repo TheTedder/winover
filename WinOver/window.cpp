@@ -34,19 +34,26 @@ namespace winover {
         return result;
     }
 
+    BOOL IsOverlay(HWND hwnd) {
+        const ULONG_PTR class_longptr = GetClassLongPtr(hwnd, GCW_ATOM);
+        return class_longptr != 0 && class_longptr == overlay_class;
+    }
+
     BOOL ChangeTarget(HWND overlay, HWND target) {
         if (overlay == target) {
             return FALSE;
         }
 
-        ULONG_PTR class_longptr = GetClassLongPtr(overlay, GCW_ATOM);
-
-        if (class_longptr == 0 || class_longptr != overlay_class) {
+        if (!IsOverlay(overlay)) {
             return FALSE;
         }
 
         // 0 doesn't necessarily indicate an error for this function because it returns the previous value, which could be 0; however, the previous value should never be zero here.
         return SetWindowLongPtr(overlay, 0, (LONG_PTR)target) != 0;
+    }
+
+    HWND GetTarget(HWND overlay) {
+        return IsOverlay(overlay) ? (HWND)GetWindowLongPtr(overlay, 0) : NULL;
     }
 
     LRESULT CALLBACK Wndproc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
