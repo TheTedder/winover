@@ -96,6 +96,10 @@ namespace winover {
             return;
         }
 
+        QUERY_USER_NOTIFICATION_STATE state;
+        SHQueryUserNotificationState(&state);
+        RECT screensize;
+        GetWindowRect(GetDesktopWindow(), &screensize);
         UINT flags;
 
 #ifdef _DEBUG
@@ -104,7 +108,16 @@ namespace winover {
         HWND after;
 #endif
 
-        if (GetWindow(hWnd, GW_HWNDNEXT) == overlaid) {
+        if (state == QUNS_RUNNING_D3D_FULL_SCREEN &&
+            overlaid == GetForegroundWindow() &&
+            info.rcClient.left == screensize.left &&
+            info.rcClient.top == screensize.top &&
+            info.rcClient.right == screensize.right &&
+            info.rcClient.bottom == screensize.bottom) {
+            // The overlaid app is occupying the entire screen.
+            after = HWND_TOPMOST;
+            flags = SWP_SHOWWINDOW;
+        } else if (GetWindow(hWnd, GW_HWNDNEXT) == overlaid) {
             // If the overlay is already direct above the target window in the Z order then we don't need to change it.
             flags = SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER;
         } else {
