@@ -2,9 +2,9 @@
 #pragma warning( disable: 4005 )
 
 #include <sdkddkver.h>
-#define NTDDI_VERSION NTDDI_WINXPSP3
-#define _WIN32_WINNT _WIN32_WINNT_WS03
-#define WINVER _WIN32_WINNT_WS03
+#define NTDDI_VERSION NTDDI_VISTA
+#define _WIN32_WINNT _WIN32_WINNT_VISTA
+#define WINVER _WIN32_WINNT_VISTA
 
 #define NOGDICAPMASKS
 #define NOVIRTUALKEYCODES
