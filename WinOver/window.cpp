@@ -70,7 +70,7 @@ namespace winover {
     VOID CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT_PTR id, DWORD time) {
         const HWND overlaid = (HWND)GetWindowLongPtr(hWnd, 0);
 
-        if (!IsWindow(hWnd)) {
+        if (!IsWindow(overlaid)) {
             DestroyWindow(hWnd);
             return;
         }
