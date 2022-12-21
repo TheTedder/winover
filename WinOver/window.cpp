@@ -109,12 +109,12 @@ namespace winover {
             flags = SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER;
         } else {
             /*
-                * Place our overlay directly below the window directly above the overlaid window.
-                * This prevents the overlay from drawing over any windows it's not supposed to.
-                * Conveniently, if there is no window of top of the one we want, GetWindow returns zero,
-                * which corresponds to the value of HWND_TOP when passed into SetWindowPos,
-                * producing the desired result of placing our overlay on top of every window.
-                */
+            * Place our overlay directly below the window directly above the overlaid window.
+            * This prevents the overlay from drawing over any windows it's not supposed to.
+            * Conveniently, if there is no window of top of the one we want, GetWindow returns zero,
+            * which corresponds to the value of HWND_TOP when passed into SetWindowPos,
+            * producing the desired result of placing our overlay on top of every window.
+            */
             after = GetWindow(overlaid, GW_HWNDPREV);
             flags = SWP_SHOWWINDOW | SWP_NOACTIVATE;
         }
